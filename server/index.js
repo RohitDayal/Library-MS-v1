@@ -20,10 +20,9 @@ app.use(cors());
 // Middleware
 app.use(bodyParser.json());
 
-// Render client for any path
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-});
+// Use the client app
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
 connectToDatabase((err) => {
   if (err) {
     console.error("Error connecting to the database:", err);
@@ -180,9 +179,11 @@ connectToDatabase((err) => {
       res.json(results); // Send the books data as JSON response
     });
   });
-// Use the client app
-app.use(express.static(path.join(__dirname, 'client', 'build')));
 
+// Render client for any path
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
   // Port
   const PORT = process.env.PORT || 5000;
 
