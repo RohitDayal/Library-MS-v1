@@ -19,8 +19,6 @@ app.use(cors());
 
 // Middleware
 app.use(bodyParser.json());
-// Use the client app
-app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 // Render client for any path
 app.get('*', (req, res) => {
@@ -182,6 +180,8 @@ connectToDatabase((err) => {
       res.json(results); // Send the books data as JSON response
     });
   });
+// Use the client app
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
   // Port
   const PORT = process.env.PORT || 5000;
